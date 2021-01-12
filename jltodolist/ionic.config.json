@@ -1,0 +1,7 @@
+{
+  "name": "jltodolist",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
