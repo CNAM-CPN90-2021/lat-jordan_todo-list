@@ -5,9 +5,25 @@ import { IonContent, IonInput, IonHeader, IonPage, IonTitle, IonToolbar, IonFoot
 import MakeList from '../components/list';
 import Tab from '../components/tab';
 
+
 const Main: React.FC = () => {
 
   const [text, setText] = useState<any>();
+  const [tableau, setTableau] = useState<any>([]);
+
+
+  function getInput() {
+    return text;
+  }
+  
+  function addElement(){
+    const myObject = {
+      label: getInput(),
+    };
+    const newArray = [...tableau, myObject];
+    setTableau(newArray);
+    setText("");
+  }
 
   return (
     <IonPage>
@@ -18,25 +34,32 @@ const Main: React.FC = () => {
       </IonHeader>
       <Tab />
       <IonContent>
-        <MakeList />
+        <MakeList list={tableau}/>
       </IonContent>
 
       <IonFooter>
-        <IonInput value={text} placeholder="Enter Input" 
-        onKeyPress={
-          e=> {
-            handleKeyPress(e);
+        <IonInput
+         value={text} 
+         placeholder="Enter Input" 
+          onKeyPress={
+            e=> {
+              if(e.key === 'Enter'){
+                addElement();
+                // addElement(text);
+              }
+            }
           }
-        }
 
-        onIonChange={e => {
-          setText(e.detail.value!);
-          }}></IonInput>
+          onIonChange={e => {
+            setText(e.detail.value!);
+          }}>
+        </IonInput>
 
         <IonButton
         onClick={
           e=> {
-            console.log(text);
+            // console.log(text);
+            addElement();
           }
         }
         >Add</IonButton>
@@ -46,14 +69,3 @@ const Main: React.FC = () => {
 };
 
 export default Main;
-
-function handleKeyPress(event) {
-  if(event.key === 'Enter'){
-    console.log(event);
-    // addElement(text);
-  }
-}
-
-function addElement(data){
-  console.log(data);
-}
