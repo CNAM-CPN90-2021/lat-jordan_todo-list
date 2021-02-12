@@ -5,24 +5,31 @@ import { IonContent, IonInput, IonHeader, IonPage, IonTitle, IonToolbar, IonFoot
 import MakeList from '../components/list';
 import Tab from '../components/tab';
 
-
 const Main: React.FC = () => {
 
   const [text, setText] = useState<any>();
-  const [tableau, setTableau] = useState<any>([]);
+  let [tableau, setTableau] = useState<any>([]);
 
+  
+
+  const myData = JSON.parse(localStorage.getItem("todolist"));
+  tableau = myData;
+  console.log("utilisation de localstorage: ", myData);
 
   function getInput() {
     return text;
   }
-  
-  function addElement(){
+
+  function addElement() {
     const myObject = {
-      label: getInput(),
+      "label": getInput(),
     };
     const newArray = [...tableau, myObject];
     setTableau(newArray);
     setText("");
+
+    localStorage.setItem("todolist", JSON.stringify(newArray));
+
   }
 
   return (
@@ -34,16 +41,16 @@ const Main: React.FC = () => {
       </IonHeader>
       <Tab />
       <IonContent>
-        <MakeList list={tableau}/>
+        <MakeList list={tableau} />
       </IonContent>
 
       <IonFooter>
         <IonInput
-         value={text} 
-         placeholder="Enter Input" 
+          value={text}
+          placeholder="Enter Input"
           onKeyPress={
-            e=> {
-              if(e.key === 'Enter'){
+            e => {
+              if (e.key === 'Enter') {
                 addElement();
                 // addElement(text);
               }
@@ -56,12 +63,12 @@ const Main: React.FC = () => {
         </IonInput>
 
         <IonButton
-        onClick={
-          e=> {
-            // console.log(text);
-            addElement();
+          onClick={
+            e => {
+              // console.log(text);
+              addElement();
+            }
           }
-        }
         >Add</IonButton>
       </IonFooter>
     </IonPage>

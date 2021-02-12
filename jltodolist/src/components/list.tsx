@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { IonList, IonItem, IonContent, IonCheckbox, IonLabel, IonRow, IonCol, IonGrid } from '@ionic/react';
-
+import { IonList, IonItem, IonContent, IonCheckbox, IonLabel, IonRow, IonCol, IonGrid, IonButton, IonIcon } from '@ionic/react';
+import { create } from 'ionicons/icons';
 const MakeList = (props) => {
 
     const list = props.list;
     const [checked, setChecked] = useState(false);
+
 
     return (
         <IonContent>
@@ -19,6 +20,11 @@ const MakeList = (props) => {
                                     </IonCol>
                                     <IonCol>
                                         <p> {e.label}</p>
+                                    </IonCol>
+                                    <IonCol>
+                                        <IonButton>
+                                            <IonIcon icon={create} />
+                                        </IonButton>
                                     </IonCol>
                                 </IonRow>
                             </IonGrid>
