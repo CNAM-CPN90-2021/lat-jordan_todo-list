@@ -232,3 +232,8 @@ http://ionicframework.com/docs/theming/ */
     --ion-card-background: #1e1e1e;
   }
 }
+
+.rayer {
+  text-decoration-line: line-through;
+  text-decoration-thickness: 3px;
+}
