@@ -1,2 +1,6 @@
 # lat-jordan_todo-list
-Hellooo git
+* Fonction ajout OK
+* Fontion suppression OK
+* Fonction Check OK
+
+* Fonction trie PAS OK
