@@ -18,10 +18,18 @@ const Main: React.FC = () => {
   let nbrTodo = 0;
 
   tableau.forEach(task => {
-    if(task.isDone === false) {
-      nbrTodo = nbrTodo +1;
+    if (task.isDone === false) {
+      nbrTodo = nbrTodo + 1;
     }
   });
+
+  function hide() {
+    if (tableau.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   function getInput() {
     return text;
@@ -91,7 +99,11 @@ const Main: React.FC = () => {
       </IonSegment>
 
       <IonContent>
+
         <IonList>
+          <IonItem  hidden={hide()}>
+              <p>Wow nothing to do !</p>
+          </IonItem>
           {tableau.map((e, index) => {
             return (
               <IonItem key={index}>
