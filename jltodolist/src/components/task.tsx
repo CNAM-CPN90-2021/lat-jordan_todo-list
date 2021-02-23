@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { IonCheckbox, IonCol, IonRow } from '@ionic/react';
 
-
 const MyTask = (props) => {
-
     const task = props.data;
     const thisIndex = props.index;
-    const [checked, setChecked] = useState(task.isDone);
+    let [checked, setChecked] = useState();
 
+    checked = task.isDone;
 
     function onCheck(event) {
         const myData = JSON.parse(localStorage.getItem("todolist"));
@@ -16,20 +15,18 @@ const MyTask = (props) => {
             "label": task.label,
             "isDone": event.detail.checked
         }
-
         localStorage.setItem("todolist", JSON.stringify(myData));
     }
 
     function rayer() {
         if (task.isDone) {
             return "rayer"
+        } else {
+            return ""
         }
     }
 
-
     return (
-
-
         <IonRow>
             <IonCol size="2">
                 <IonCheckbox checked={checked} onIonChange={(e) => {
@@ -42,7 +39,6 @@ const MyTask = (props) => {
                 <h3 className={rayer()}>{task.label}</h3>
             </IonCol>
         </IonRow>
-
     )
 };
 

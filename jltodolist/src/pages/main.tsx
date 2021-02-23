@@ -5,18 +5,30 @@ import { IonContent, IonInput, IonHeader, IonPage, IonTitle, IonToolbar, IonFoot
 import MyTask from '../components/task';
 import { trash } from 'ionicons/icons';
 
+
+function getData() {
+  return JSON.parse(localStorage.getItem("todolist"));
+}
+
 const Main: React.FC = () => {
+
   const [text, setText] = useState<any>();
-  let [tableau, setTableau] = useState<any>([]);
-  console.log("start");
-  // Reset data
-  // localStorage.setItem("todolist", JSON.stringify([]));
-  // return
-  const myData = JSON.parse(localStorage.getItem("todolist"));
-  tableau = myData;
+  let [tableau, setTableau] = useState<any>(getData());
+  let [segment, setSegment] = useState("all");
+  let nbrTodo = 0;
+
+  tableau.forEach(task => {
+    if(task.isDone === false) {
+      nbrTodo = nbrTodo +1;
+    }
+  });
 
   function getInput() {
     return text;
+  }
+
+  function storeData() {
+    localStorage.setItem("todolist", JSON.stringify(tableau));
   }
 
   function addElement() {
@@ -32,33 +44,34 @@ const Main: React.FC = () => {
     tableau = [...tableau, myObject];
     setTableau(tableau);
     setText("");
-    localStorage.setItem("todolist", JSON.stringify(tableau));
+    storeData()
   }
 
 
-  // ne marche pas tout a fait comme je veux
-  function filter(e) {
+  function changeTab(e) {
     const tab = e.detail.value;
     let filtreTableau = [];
+    nbrTodo = 0;
+    setTableau(filtreTableau);
     if (tab === "todo") {
-      tableau.filter(task => task.isDone === false).map(filterTask => (
-        filtreTableau = [...filtreTableau, filterTask]
-      ));
+      setSegment("todo");
+      tableau.filter(task => task.isDone === false).map(filterTask => {
+        filtreTableau = [...filtreTableau, filterTask];
+      });
+
       setTableau(filtreTableau);
     } else {
-      const storeData = JSON.parse(localStorage.getItem("todolist"));
+      setSegment("all");
+      const storeData = getData();
       setTableau(storeData);
     }
   }
 
-
   function removeTask(index) {
     tableau.splice(index, 1);
-    localStorage.setItem("todolist", JSON.stringify(tableau));
-    setTableau(tableau);
+    storeData()
+    setTableau(getData());
   }
-
-
 
   return (
     <IonPage>
@@ -68,9 +81,9 @@ const Main: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonSegment value="todo" onIonChange={e => filter(e)}>
+      <IonSegment value={segment} onIonChange={(e) => changeTab(e)}>
         <IonSegmentButton value="todo">
-          <IonLabel>To do</IonLabel>
+          <IonLabel>To do ({nbrTodo})</IonLabel>
         </IonSegmentButton>
         <IonSegmentButton value="all">
           <IonLabel>All</IonLabel>
