@@ -1,3 +1,7 @@
+/*
+    ce fichier est inutilisé
+*/
+
 import React from 'react';
 import {  IonSegment, IonSegmentButton, IonLabel } from '@ionic/react';
 

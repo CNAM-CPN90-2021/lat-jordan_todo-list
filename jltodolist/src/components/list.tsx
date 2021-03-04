@@ -1,3 +1,7 @@
+/*
+    ce fichier est inutilisé
+*/
+
 import React, { useState } from 'react';
 import { IonList, IonItem, IonContent, IonCheckbox, IonLabel, IonRow, IonCol, IonGrid, IonButton, IonIcon } from '@ionic/react';
 import { create } from 'ionicons/icons';

@@ -10,6 +10,14 @@ const MyTask = (props) => {
 
 
     function onCheck(event) {
+        /*
+            étrange façon de faire remonter l'information
+            
+            Pose problème car :
+            - ne déclenche pas de rerender
+            - tu multiplies les sources d'information
+            - le flux des données est invisibilisé : on peut lire et écrire sur le localStorage de n'importe où, c'est pas mieux qu'une variable globale ;)
+        */
         const myData = JSON.parse(localStorage.getItem("todolist"));
 
         myData[thisIndex] = {
@@ -20,6 +28,15 @@ const MyTask = (props) => {
         localStorage.setItem("todolist", JSON.stringify(myData));
     }
 
+    /*
+        Tu peux te contenter d'une déclaration de variable :
+
+        const labelClassName = task.isDone ? "rayer" : ""
+
+        return (
+            <h3 className={labelClassName}></h3>
+        )
+    */
     function rayer() {
         if (task.isDone) {
             return "rayer"
@@ -33,6 +50,10 @@ const MyTask = (props) => {
         <IonRow>
             <IonCol size="2">
                 <IonCheckbox checked={checked} onIonChange={(e) => {
+                    /*
+                        modifier ton objet ici est inutile (ne déclenche pas de rerender)
+                        et même dangereux (tu peux te retrouver avec des données fausses ailleurs dans ton application)
+                    */
                     task.isDone = e.detail.checked
                     setChecked(task.isDone);
                     onCheck(e);
